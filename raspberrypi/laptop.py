@@ -2,7 +2,7 @@ import socket
 s = socket.socket()
 print("Socket created successfully")
 port = 8000
-s.bind(('192.168.207.245', port))
+s.bind(('192.168.207.151', port))
 print("socket has been binded to port 8000")
 s.listen(5)
 while True:
