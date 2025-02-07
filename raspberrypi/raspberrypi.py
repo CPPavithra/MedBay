@@ -4,7 +4,6 @@ sensor = serial.Serial(port = '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
 
 def crash_detection():
     data = sensor.readline()
-    print(data)
     if data == b'1\r\n':
         print("ALERT: CRASH DETECTED")
         return 1
