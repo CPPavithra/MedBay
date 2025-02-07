@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 30vh;
   background-color: #fde8dc;
   margin: 0;
 }
@@ -26,11 +26,12 @@ body {
 
 .login-card {
   background: white;
-  padding: 2rem;
+  padding: 10rem;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 350px;
+  height: 500px;
 }
 
 .title {

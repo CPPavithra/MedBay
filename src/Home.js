@@ -22,7 +22,7 @@ const Home = () => {
           <button className="split-btn left" onClick={() => navigate("/login")}>
             AS USER
           </button>
-          <button className="split-btn right" onClick={() => navigate("/login-help")}>
+          <button className="split-btn right" onClick={() => navigate("/helplogin")}>
             AS HELP
           </button>
         </div>

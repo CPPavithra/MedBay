@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import "./Alert.css";
-import { FiBell } from "react-icons/fi";
-import ModalComponent from "./ModalComponent";
-import axios from "axios";
-import { sendAlertEmail } from "./emailService"; // Import EmailJS service
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { sendAlertEmail } from "./emailService";  // Ensure this is set up correctly
+import ModalComponent from "./ModalComponent"; // Adjust the path if needed
+import { FiBell } from "react-icons/fi";
 
 const initialAlerts = [
   { type: "Fire alert", distance: "7km", location: "Mello cafe\ntrs", icon: "🔥" },
@@ -20,7 +19,6 @@ const Alert = () => {
   const [currentAlert, setCurrentAlert] = useState(null);
   const [isAddAlert, setIsAddAlert] = useState(false);
 
-  // Open the modal to update or add alerts
   const handleAlertClick = (alert) => {
     setCurrentAlert(alert);
     setIsAddAlert(false);
@@ -38,7 +36,6 @@ const Alert = () => {
     setCurrentAlert(null);
   };
 
-  // Form submission: sends data to backend and sends an email via EmailJS
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -46,34 +43,39 @@ const Alert = () => {
       type: form.type.value,
       location: form.location.value,
       details: form.details.value,
-      recipientEmail: "cppavithra05@gmail.com", // Placeholder for the recipient email
+      recipientEmail: "cppavithra05@gmail.com",  // or any dynamic email
     };
 
     try {
-      // Sending data to the backend (SQL database)
-      await axios.post("http://localhost:5000/send_alert", alertDetails, {
+      // Send alert data to the backend to store it in the database
+      const response = await axios.post("http://localhost:5000/send_alert", alertDetails, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json', // Make sure the content type is correct
         },
       });
 
-      // Send email via EmailJS
-      await sendAlertEmail(alertDetails);
+      // If the alert is successfully saved in the database
+      if (response.status === 201) {
+        // Send the email via EmailJS
+        await sendAlertEmail(alertDetails);
+        alert("Alert sent successfully!");
 
-      if (isAddAlert) {
-        setAlerts([...alerts, alertDetails]); // Add new alert
-      } else {
-        setAlerts(alerts.map((alert) => (alert.location === currentAlert.location ? alertDetails : alert)));
+        // Update the alert list in the UI
+        if (isAddAlert) {
+          setAlerts([...alerts, alertDetails]);  // Add new alert
+        } else {
+          setAlerts(alerts.map((alert) => (alert.location === currentAlert.location ? alertDetails : alert)));
+        }
+
+        handleModalClose();
       }
-
-      handleModalClose();
     } catch (error) {
-      console.error("Failed to send alert:", error);
-      alert("There was an error processing the alert.");
+      console.error("Error submitting alert:", error);
+      alert("Error registering. Please try again.");
     }
   };
 
-  return (
+ return (
     <div className="alert-container">
       <header>
         <button className="back-btn" onClick={() => navigate("/home")}>🏠</button>

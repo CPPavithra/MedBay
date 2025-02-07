@@ -77,6 +77,7 @@ const FormPage = () => {
   return (
     <div className="form-container">
       <h1 className="form-title">MEDBAY</h1>
+      <h1>USER-SIGNUP</h1>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <label>Name</label>

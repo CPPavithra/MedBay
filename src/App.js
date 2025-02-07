@@ -9,6 +9,8 @@ import Home from "./Home";
 import Helpform from "./helpform";
 import Login from "./login";
 import Profile from "./profile";
+import Helplogin from "./helplogin";
+import HelpProfile from "./helpprofile";
 import axios from "axios";
 
 
@@ -31,7 +33,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route 
-            path="/alert" 
+            path="/" 
             element={<Alert alerts={alerts} onSubmit={handleAlertSubmit} />} 
           />
           <Route path="/navigation" element={<NavigationMap />} />
@@ -42,6 +44,8 @@ function App() {
  <Route path="/helpform" element={<Helpform />} />
  <Route path="/profile/:aadhaar_number" element={<Profile />} />
  <Route path="/login" element={<Login />} />
+<Route path="/helplogin" element={<Helplogin />} />
+<Route path="/helpprofile/:email" element={<HelpProfile />} />
         </Routes>
       </div>
     </Router>

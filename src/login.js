@@ -3,10 +3,13 @@ import axios from "axios";
 import "./login.css"; // Ensure to create this CSS file for styling
 import { FaUser, FaLock } from "react-icons/fa";
 import header from "./images/header.png";
+import home from "./images/home.png";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [aadhaar_number, setAadhaarNumber] = useState("");
   const [error, setError] = useState("");
+   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,6 +38,11 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <div className="login-card">
+          <header>
+        <button className="back-btn" onClick={() => navigate("/home")}>🏠︎</button>
+<h1>   </h1>     
+ </header>
+
  <img src={header} alt="Decorative Plants" className="header-image" />
         <h1 className="title">Sign Up</h1>
         <form onSubmit={handleLogin}>
@@ -55,7 +63,7 @@ const LoginPage = () => {
           <button type="submit" className="submit-btn">Next</button>
         </form>
         {error && <p className="error-message">{error}</p>}
-        <p className="footer-text">Already have an account? <a href="/login">Sign in</a></p>
+         <p className="footer-text">New here? <a href="/form">Sign up</a></p>
       </div>
     </div>
   );
