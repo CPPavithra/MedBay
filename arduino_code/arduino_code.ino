@@ -1,13 +1,13 @@
 int sensorPin = A0;
 int sensorValue = 0;
 void setup() {
-  pinMode(ledPin, OUTPUT);
   Serial.begin(9600);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
   sensorValue = analogRead(sensorPin);
-  if (sensorValue >= 520)
+  if (sensorValue >= 400)
   {
     Serial.println(1);
     digitalWrite(LED_BUILTIN, HIGH);
