@@ -22,8 +22,8 @@ def detect_accident(s):
 
 def main():
     s = initialize_laptop()
-    check = detect_accident(s)
     while True:
+        check = detect_accident(s)
         if check == 1:
             print("ACCIDENT OCCURED")
             time.sleep(2)
