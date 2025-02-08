@@ -18,6 +18,7 @@ def detect_accident(s):
         print(status)
         if status == 'ALERT: EMERGENCY':
             return 1
+        else: return 0
 
 def main():
     s = initialize_laptop()
