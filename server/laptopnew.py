@@ -26,8 +26,8 @@ def main():
     while True:
         if check == 1:
             print("ACCIDENT OCCURED")
-            time.sleep(2) 
-        else :check=0
+            time.sleep(2)
+            check = 0
 
 if __name__ == "__main__":
     main()
