@@ -13,7 +13,7 @@ def node_init():
     node = socket.socket()
     print("Socket created successfully")
     port = 8000
-    node.bind(('192.168.207.102', port))
+    node.bind(('192.168.87.102', port))
     print("socket has been binded to port 8000")
     node.listen(5)
     c, addr = node.accept()
