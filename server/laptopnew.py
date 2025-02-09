@@ -9,7 +9,7 @@ CORS(app)  # Allows requests from frontend
 def initialize_laptop():
     s = socket.socket()
     port = 8000
-    s.connect(('192.168.28.102', port))
+    s.connect(('192.168.87.102', port))
     return s
 
 def detect_accident(s):
