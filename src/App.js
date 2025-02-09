@@ -38,14 +38,14 @@ function App() {
           />
           <Route path="/navigation" element={<NavigationMap />} />
           <Route path="/emergency" element={<EmergencyMap />} />
-        <Route path="/confirmation" element={<ConfirmationPage />} />
+          <Route path="/confirmation" element={<ConfirmationPage />} />
          <Route path="/form" element={<Form />} />
          <Route path="/home" element={<Home />} />
- <Route path="/helpform" element={<Helpform />} />
+         <Route path="/helpform" element={<Helpform />} />
  <Route path="/profile/:aadhaar_number" element={<Profile />} />
  <Route path="/login" element={<Login />} />
 <Route path="/helplogin" element={<Helplogin />} />
-<Route path="/helpprofile/:email" element={<HelpProfile />} />
+<Route path="/helpprofile" element={<HelpProfile />} />
         </Routes>
       </div>
     </Router>
@@ -53,4 +53,3 @@ function App() {
 }
 
 export default App;
-

@@ -12,15 +12,16 @@ body {
 /* Profile Card */
 .profile-card {
   background: white;
-  width: 85%;
-  max-width: 350px;
-  padding: 20px;
+  padding: 80px;
   border-radius: 20px;
   text-align: center;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 600px; /* Adjust as needed */
+  height: 700px;
+
 }
 
 /* Profile Image */
@@ -55,7 +56,7 @@ body {
 }
 
 .profile-button {
-  background: #FFCC00;
+  background: #3d5a40;
   color: black;
   padding: 10px 20px;
   border-radius: 20px;
@@ -110,3 +111,77 @@ body {
   margin-bottom: 10px;
 }
 
+/* Profile.css */
+
+/* ... (Existing CSS) ... */
+
+
+.profile-image {
+    /* ... (Existing styles) ... */
+    margin-bottom: 20px; /* Space between image and name */
+}
+
+.profile-img {
+    /* ... (Existing styles) ... */
+    width: 120px; /* Adjust size as needed */
+    height: 120px;
+    border: 5px solid white; /* Thicker border */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+}
+
+.medbay-text h2 {
+    /* ... (Existing styles) ... */
+    font-size: 28px; /* Larger font size */
+    color: #4B0082; /* Purple color */
+    margin-bottom: 20px; /* Add spacing */
+}
+
+.profile-buttons {
+    /* ... (Existing styles) ... */
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center buttons */
+    gap: 10px; /* Space between buttons */
+    margin-bottom: 20px; /* Space below buttons */
+    color: #3d5a40;
+}
+
+.profile-button {
+    /* ... (Existing styles) ... */
+    width: 100%; /* Full width buttons */
+    background-color: #3d5a40; /* Slate blue */
+    color: white; /* White text */
+    padding: 12px 24px; /* Adjust padding */
+    border-radius: 8px; /* Less rounded corners */
+}
+
+.profile-button:hover {
+    background-color: #483D8B; /* Darker slate blue */
+}
+
+
+.profile-bottom-details {
+    /* ... (Existing styles) ... */
+    width: 100%;
+}
+
+.profile-bottom-field {
+    /* ... (Existing styles) ... */
+    background-color: #f0f0f5; /* Lighter background color */
+    padding: 12px; /* Adjust padding */
+    border-radius: 8px; /* Less rounded corners */
+    margin-bottom: 12px;
+}
+
+.profile-bottom-field label {
+    /* ... (Existing styles) ... */
+    color: #777; /* Lighter label color */
+    margin-bottom: 4px; /* Space between label and value */
+}
+
+.profile-bottom-field p {
+    /* ... (Existing styles) ... */
+    color: #333; /* Darker text color */
+    font-size: 18px; /* Slightly larger text */
+}
+
+/* ... (Rest of your CSS) ... */

@@ -6,41 +6,48 @@ import { FaUser, FaLock } from "react-icons/fa";
 import header from "./images/header.png"; // Ensure this image exists in your project
 
 const HelpLogin = () => {
-  const navigate = useNavigate(); // For redirection
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+    const [error, setError] = useState("");
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    
-    if (!emailRegex.test(formData.email)) {
-      setError("Invalid email format.");
-      return;
-    }
+    const handleChange = (e) => {  // Add a handleChange function
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-    try {
-      const response = await axios.post("http://localhost:5000/helplogin", formData);
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-      if (response.data.success) {
-        navigate(`/helpprofile/${response.data.user.id}`);
-      } else {
-        setError("Invalid email or password.");
-      }
-    } catch (err) {
-      setError("An error occurred. Please try again.");
-    }
-  };
+        if (!emailRegex.test(formData.email)) {
+            setError("Invalid email format.");
+            return;
+        }
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError("");
-  };
+        try {
+            const response = await axios.post("http://localhost:5000/helplogin", formData);
 
+            if (response.data.success) {
+                navigate(`/helpprofile?email=${encodeURIComponent(formData.email)}`); // Use formData.email
+            } else {
+                setError("Invalid email or password.");
+            }
+        } catch (err) {
+            setError("An error occurred. Please try again.");
+            console.error("Login Error:", err); // Log the error for debugging
+            if (err.response) {
+                console.error("Response Data:", err.response.data);
+                console.error("Response Status:", err.response.status);
+                console.error("Response Headers:", err.response.headers);
+            } else if (err.request) {
+                console.error("Request:", err.request);
+            }
+        }
+    };   
+ 
   return (
     <div className="login-container">
       <div className="login-card">

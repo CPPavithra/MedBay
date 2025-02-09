@@ -22,7 +22,6 @@ const NavigationMap = () => {
       console.error("Map container element not found");
       return;
     }
-
     let mapInstance;
     try {
       if (!mapElement._leaflet_id) {
@@ -39,13 +38,12 @@ const NavigationMap = () => {
       try {
         const response = await axios.get(`/api/path?hospitalLat=${hospitalCoords.lat}&hospitalLng=${hospitalCoords.lng}&accidentLat=${accidentCoords.lat}&accidentLng=${accidentCoords.lng}`);
         const pathCoords = response.data;
-        setRouteCoords(pathCoords);
-
         const distance = calculateDistance(hospitalCoords, accidentCoords);
         const time = calculateTime(distance);
         setDistance(distance.toFixed(2));
         setTime(time.toFixed(0));
         setStatus('Path displayed');
+        setRouteCoords(pathCoords);
       } catch (error) {
         console.error("Error getting path:", error);
         setStatus('Error getting path');
@@ -59,12 +57,13 @@ const NavigationMap = () => {
       .addTo(mapInstance)
       .bindPopup('Start: Hospital')
       .openPopup();
+
     L.marker([accidentCoords.lat, accidentCoords.lng])
       .addTo(mapInstance)
       .bindPopup('End: Accident Location');
 
     if (routeCoords.length > 0) {
-      L.polyline(routeCoords, { color: 'blue' }).addTo(mapInstance);
+      L.polyline(routeCoords, { color: 'green', weight: 5 }).addTo(mapInstance);
     }
 
     return () => {
@@ -72,7 +71,7 @@ const NavigationMap = () => {
         mapInstance.remove();
       }
     };
-  }, [hospitalCoords, accidentCoords]);
+  }, [hospitalCoords, accidentCoords, routeCoords]);
 
   const calculateDistance = (start, end) => {
     // Distance calculation logic

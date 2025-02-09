@@ -1,4 +1,5 @@
 .emergency-container {
+  background-color: white;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -200,5 +201,29 @@
   #emergency-map {
     height: 250px;
   }
+}
+
+.metrics {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.distance, .time {
+  font-size: 24px;
+  margin: 5px 0;
+}
+
+.path-type {
+  color: #4CAF50;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.alert-message {
+  color: #FF4444;
+  text-align: center;
+  font-size: 14px;
+  margin: 10px 0;
 }
 

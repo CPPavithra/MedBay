@@ -67,10 +67,11 @@ const EmergencyMap = () => {
       <div className="details-container">
         <div className="details-section">
           <h3>VICTIM</h3>
-          <p><strong>KAMLESH R</strong></p>
-          <p>23 yrs</p>
-          <p>Male</p>
+          <p><strong>Pavithra</strong></p>
+          <p>9999510009</p>
+          <p>Female</p>
           <p>Blood- B+ve</p>
+          <p>pavinikki@gmail.com</p>
         </div>
         <div className="details-section">
           <h3>VEHICLE</h3>
