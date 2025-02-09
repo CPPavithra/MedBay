@@ -20,10 +20,8 @@ def detect_accident(s):
 def main():
     s = initialize_laptop()
     check = detect_accident(s)
-    while True:
-	if check == 1:
-		print("ACCIDENT OCCURED")
-		time.sleep(1)
+    if check == 1:
+	print("ACCIDENT OCCURED")
 
 if __name__ == "__main__":
     main()

@@ -3,12 +3,15 @@ from flask_cors import CORS
 import mysql.connector
 import bcrypt
 from flask_cors import cross_origin
+#from laptopnew import *
 
 app = Flask(__name__)
-#CORS(app)  # Allows requests from frontend
-CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
+CORS(app)  # Allows requests from frontend
+#CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 #CORS(app, resources={r"/helpform": {"origins": "http://localhost:3000"}})
-
+#CORS(app, origins=["http://localhost:5000"]) 
+# Allow specific methods
+#CORS(app, resources={r"/helpprofile": {"origins": "http://localhost:5000"}}, methods=['GET'])
 # Database connection function
 def get_db_connection():
     return mysql.connector.connect(
@@ -223,22 +226,23 @@ def login_help():
         cursor.close()
         db.close()
 
-# Route to fetch help user profile
-@app.route('/helpprofile/<int:id>', methods=['GET'])
-def helpprofile(id):
+"""# Route to fetch help user profile by email
+@app.route('/helpprofile', methods=['GET'])
+def helpprofile():
+    email = request.args.get("email")  # Get email from query params
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
     try:
         db = get_db_connection()
         cursor = db.cursor()
 
-        sql = "SELECT name, helptype FROM help_users WHERE id = %s"
-        cursor.execute(sql, (int(id),))
+        sql = "SELECT name, helptype FROM help_users WHERE LOWER(email) = LOWER(%s)"
+        cursor.execute(sql, (email,))
         user = cursor.fetchone()
 
         if user:
-            user_data = {
-                "name": user[0],
-                "helptype": user[1]
-            }
+            user_data = {"name": user[0], "helptype": user[1]}
             return jsonify({"help_profile": user_data}), 200
         else:
             return jsonify({"error": "User not found"}), 404
@@ -246,7 +250,43 @@ def helpprofile(id):
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
     finally:
         cursor.close()
-        db.close()
+        db.close()"""
+
+# Load all help users at startup
+help_users_data = {}
+
+def load_help_users():
+    global help_users_data
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT email, name, helptype FROM help_users")
+    users = cursor.fetchall()
+    
+    # Store in dictionary format
+    help_users_data = {user["email"]: {"name": user["name"], "helptype": user["helptype"]} for user in users}
+
+    cursor.close()
+    db.close()
+    print("✅ Help users loaded:", help_users_data)  # Debugging
+
+load_help_users()
+
+@app.route('/helpprofile', methods=['GET'])
+def helpprofile():
+    email = request.args.get("email")
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
+    print(f"🔍 Received email: {email}")  # Debugging
+    # Fetch from in-memory dictionary instead of querying DB
+    user_data = help_users_data.get(email)
+
+    if user_data:
+        return jsonify({"help_profile": user_data}), 200
+    else:
+        return jsonify({"error": "User not found"}), 404
+ 
 
 @app.route('/send_alert', methods=['POST', 'OPTIONS'])
 def send_alert():
@@ -283,21 +323,27 @@ def send_alert():
 def get_alerts():
     try:
         alert_type = request.args.get("type")
-        if not helptype:
-            return jsonify({"error": "No help type provided"}), 400  # Get helptype from query param
+        if not alert_type:
+            return jsonify({"error": "No help type provided"}), 400
+
         db = get_db_connection()
+        if db is None:
+            return jsonify({"error": "Database connection failed"}), 500
+
         cursor = db.cursor(dictionary=True)
 
         sql = "SELECT * FROM alerts WHERE LOWER(type) = LOWER(%s)"
         cursor.execute(sql, (alert_type,))
         alerts = cursor.fetchall()
 
-        return jsonify({"alerts": alerts})
-    except mysql.connector.Error as err:
-        return jsonify({"error": f"MySQL Error: {str(err)}"}), 500
-    finally:
         cursor.close()
         db.close()
+
+        if not alerts:
+            return jsonify({"alerts": []}), 200 # Return empty list
+        return jsonify({"alerts": alerts}), 200
+    except sqlite3.Error as err:
+        return jsonify({"error": f"Database error: {str(err)}"}), 500
 
 
 
@@ -307,6 +353,15 @@ def after_request(response):
     response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
     return response
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+"""@app.route('/alertsautomatic', methods=['GET'])
+def get_alerts_auto():
+    s = initialize_laptop()
+    k = detect_accident(s)
+    if k == 1:
+        return jsonify({"alert": True}), 200
+    return jsonify({"alert": False}), 200"""
 
+if __name__ == "__main__":
+    #load_help_users()
+    app.run(debug=True, port=5000)
+    
