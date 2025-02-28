@@ -13,7 +13,7 @@ def node_init():
     node = socket.socket()
     print("Socket created successfully")
     port = 8000
-    node.bind(('192.168.87.102', port))
+    node.bind(('192.168.53.102', port))
     print("socket has been binded to port 8000")
     node.listen(5)
     c, addr = node.accept()
@@ -25,7 +25,7 @@ def send_alert(c):
     while True:
         try:
             c.send("ALERT: EMERGENCY".encode())
-            c.send("VEHICLE 1 in distress".encode())
+            c.send("DISTRESS SIGNAL DETECTED".encode())
         except BrokenPipeError:
             print("Disconnected")
         break

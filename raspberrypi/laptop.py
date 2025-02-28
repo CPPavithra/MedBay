@@ -2,7 +2,7 @@ import socket
 def initialize_laptop():
     s = socket.socket()
     port = 8000
-    s.connect(('192.168.207.102', port))
+    s.connect(('192.168.53.102', port))
     return s
 def detect_accident(s):
     while True:
@@ -14,7 +14,7 @@ def main():
     s = initialize_laptop()
     check = detect_accident(s)
     if check == 1:
-        print("ACCIDENT OCCURED")
+        print("EMERGENCY DETECTED: ALERTING POLICE FORCE")
 if __name__ == "__main__":
     main()
 
